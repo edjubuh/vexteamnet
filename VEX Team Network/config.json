@@ -1,0 +1,15 @@
+{
+    "Data": {
+        "VTNConnection": {
+            
+        },
+        "ApplicationConnection": {
+            "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-VexTeamNetwork-b7ce3e62-7635-4979-b088-dad647bae649;Trusted_Connection=True;MultipleActiveResultSets=true"
+        }
+    },
+    "EntityFramework": {
+        "ApplicationDbContext": {
+            "ConnectionString": "Data:ApplicationConnection:ConnectionString"
+        }
+    }
+}
