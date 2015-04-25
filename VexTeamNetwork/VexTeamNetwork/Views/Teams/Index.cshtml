@@ -1,0 +1,66 @@
+﻿@model IEnumerable<VexTeamNetwork.Models.Team>
+@using VexTeamNetwork.Controllers.MVC
+@{
+    ViewBag.Title = "Teams";
+}
+
+<div class="table-responsive">
+    <table id="teams_table" data-order='[[0, "asc"]]' class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Number)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TeamName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RobotName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Organization)
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Grade)
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (VexTeamNetwork.Models.Team item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Number, "Details", new { id = item.Number })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeamName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RobotName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organization)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @item.Grade.GetDisplayAttribute(g => g.GetShortName())
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $('#teams_table').DataTable({
+            "pageLength": 25,
+            "info": false,
+            "stateSave" : true
+        });
+    });
+</script>

@@ -50,19 +50,15 @@ namespace VexTeamNetwork
             //    clientId: "",
             //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
-
             //app.UseFacebookAuthentication(
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "424101375210-o4hhkl4k8ogana64sn3rav0dlg3mcck5.apps.googleusercontent.com",
+                ClientSecret = "ll0s-oE0dhy9Mrtq3e9jL-mR"
+            });
         }
     }
 }

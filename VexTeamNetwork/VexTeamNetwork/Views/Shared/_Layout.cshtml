@@ -24,15 +24,36 @@
                 </a>
             </div>
 
-            <div id="search-navbar" aria-expanded="false">
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
-                        <input type="text" id="siteSearch" name="siteSearch" class="form-control" placeholder="Search">
-                    </div>
-                    <span class="input-group-btn">
-                        <button id="searchButton" class="btn btn-default" ><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                </form>
+            <a class="navbar-quicklink" href="@Url.Action("Index", "Teams")">
+                <span class="glyphicon glyphicon-user" />
+            </a>
+
+            <button id="loginToggle" type="button" class="navbar-toggle collapsed navbar-right" data-toggle="collapse" data-target="#login-partial">
+                <span class="sr-only">Toggle User Panel</span>
+                <span class="glyphicon glyphicon-user" />
+            </button>
+            <div id="login-partial" class="collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+
+            <div id="search-navbar" class="navbar-search" aria-expanded="false">
+                <input class="navbar-search-input" type="text" id="searchInput" name="siteSearch" placeholder="Search">
+                <span class="navbar-search-button">
+                    <button id="searchButton" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+
+            <div class="vtn-breadcrumbs">
+                <ol class="breadcrumb">
+                    @if (ViewBag.Breadcrumbs != null)
+                    {
+                        foreach (MvcHtmlString crumb in ViewBag.Breadcrumbs)
+                        {
+                            <li>@crumb</li>
+                        }
+                    }
+                    <li class="active">@ViewBag.Title</li>
+                </ol>
             </div>
         </div>
     </nav>

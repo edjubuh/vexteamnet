@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
 
 namespace VexTeamNetwork.Models
 {
-    public class Team
+    public class Team : Resources
     {
         public const string RegexMatcher = "^[1-9]\\d{0,3}[A-Z]{0,1}$|^[A-Z]{0,4}[1-9]{0,1}$";
 
@@ -15,7 +12,7 @@ namespace VexTeamNetwork.Models
         [RegularExpression(RegexMatcher, ErrorMessage = "Must be a valid team number.")]
         public string Number { get; set; }
 
-        public string Name { get; set; }
+        public string TeamName { get; set; }
 
         [Display(Name = "Robot Name")]
         public string RobotName { get; set; }
