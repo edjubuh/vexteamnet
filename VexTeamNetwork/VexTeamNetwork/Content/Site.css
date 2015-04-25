@@ -1,0 +1,105 @@
+﻿body {
+    font-family: 'Noto Sans', sans-serif;
+    padding-top: 100px;
+    padding-bottom: 0;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Site Layout */
+.navbar-header {
+    height: 75px;
+    display: inline-block;
+    float: left;
+}
+
+.navbar-brand {
+    padding-top: 0;
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0;
+    padding-bottom: 0;
+    height: 100%;
+}
+
+    .navbar-brand > img {
+        display: block;
+        width: 50px;
+        height: 50px;
+        position: relative;
+        top: 50%;
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+#search-navbar {
+    display: inline-block;
+    float: right;
+}
+
+@media (max-width: 768px) {
+    #search-navbar > form > div > input {
+        width: 0;
+    }
+}
+
+#search-navbar > form {
+    padding: 0;
+    margin: 0;
+}
+
+    #search-navbar > form > .form-group {
+        float: left;
+        display: block;
+    }
+
+    #search-navbar > form > span {
+        width: auto;
+        float: left;
+        display: block;
+    }
+
+        #search-navbar > form > span > button {
+            -moz-transition: color 0.5s ease;
+            -o-transition: color 0.5s ease;
+            -webkit-transition: color 0.5s ease;
+            transition: color 0.5s ease;
+            border-color: transparent;
+            background-color: transparent;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+.navbar button > span {
+    -moz-transition: color 0.5s ease;
+    -o-transition: color 0.5s ease;
+    -webkit-transition: color 0.5s ease;
+    transition: color 0.5s ease;
+}
+
+.navbar button:hover > span {
+    background-color: transparent;
+    color: #2196f3;
+}
