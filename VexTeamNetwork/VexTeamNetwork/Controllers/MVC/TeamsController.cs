@@ -20,7 +20,9 @@ namespace VexTeamNetwork.Controllers.MVC
             return View(db.Teams.ToList());
         }
 
-        // GET: Teams/Details/5
+        // GET: Teams/5
+        [Route("Team/{id}")]
+        [Route("{id:regex(" + Team.RegexMatcher + ")}")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -46,7 +48,7 @@ namespace VexTeamNetwork.Controllers.MVC
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Number,Name,RobotName,Organization,City,Region,Country,IsRegistered,Grade,Program")] Team team)
+        public ActionResult Create([Bind(Include = "Number,TeamName,RobotName,Organization,City,Region,Country,IsRegistered,Grade,Program")] Team team)
         {
             if (ModelState.IsValid)
             {
