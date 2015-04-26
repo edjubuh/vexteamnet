@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using System.Threading;
 using Microsoft.Azure;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using VexTeamNetwork.AutomatedDownloader.Models;
+using Npgsql;
+using System.Data.SqlClient;
 
 namespace VexTeamNetwork.AutomatedDownloader
 {
@@ -40,9 +43,19 @@ namespace VexTeamNetwork.AutomatedDownloader
             if (credentials == null)
                 credentials = GetAuthoriationCredentials();
 
-            var teams = await VexDbDownloader.Download<Team>("http://api.vex.us.nallen.me/get_teams");
-
-            Console.WriteLine(teams);
+            var teams = await VexDbDownloader.Download<Team>("http://api.vex.us.nallen.me/get_teams?region=Indiana");
+            foreach (Team team in teams)
+            {
+                team.LastModifiedTime = DateTime.Now;
+                team.LastModifierUserId = "VtnBot";
+            }
+            string connectionString = "";
+            using(var context = new NetworkContext())
+            {
+                context.Teams.AddRange(teams);
+                context.SaveChanges();
+            }
+            
             Console.ReadKey();
         }
     }

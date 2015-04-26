@@ -9,8 +9,7 @@ namespace VexTeamNetwork.AutomatedDownloader.Models
     {
         static Func<DisplayAttribute, string> enumLambda = (t) => t.GetDescription();
 
-
-        [Key, MaxLength(5)]
+        [Key, MaxLength(6)]
         [JsonProperty("number")]
         public string Number { get; set; }
 
@@ -40,5 +39,33 @@ namespace VexTeamNetwork.AutomatedDownloader.Models
 
         [JsonProperty("is_registered"), JsonConverter(typeof(BooleanConverter))]
         public bool IsRegistered { get; set; }
+
+        public bool Equals(Team other)
+        {
+            return
+                this.Number == other.Number &&
+                this.TeamName == other.TeamName &&
+                this.RobotName == other.RobotName &&
+                this.Organization == other.Organization &&
+                this.City == other.City &&
+                this.Country == other.Country &&
+                this.Program == other.Program &&
+                this.Grade == other.Grade &&
+                this.IsRegistered == other.IsRegistered;
+        }
+
+        public bool AnyEquivalent(Team other)
+        {
+            return
+                this.Number == other.Number ||
+                this.TeamName == other.TeamName ||
+                this.RobotName == other.RobotName ||
+                this.Organization == other.Organization ||
+                this.City == other.City ||
+                this.Country == other.Country ||
+                this.Program == other.Program ||
+                this.Grade == other.Grade ||
+                this.IsRegistered == other.IsRegistered;
+        }
     }
 }

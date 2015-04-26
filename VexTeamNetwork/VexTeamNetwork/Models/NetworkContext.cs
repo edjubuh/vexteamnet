@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using VexTeamNetwork.Models;
 
 namespace VexTeamNetwork.Models
 {
@@ -44,10 +35,26 @@ namespace VexTeamNetwork.Models
 
         public override int SaveChanges()
         {
-            
+            UpdateLastModifiers();
             return base.SaveChanges();
         }
 
+        public override Task<int> SaveChangesAsync()
+        {
+            UpdateLastModifiers();
+            return base.SaveChangesAsync();
+        }
+
+        public override Task<int> SaveChangesAsync(System.Threading.CancellationToken cancellationToken)
+        {
+            UpdateLastModifiers();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         public DbSet<Team> Teams { get; set; }
+
+        public DbSet<Competition> Competitions { get; set; }
+
+        public DbSet<Division> Divisions { get; set; }
     }
 }

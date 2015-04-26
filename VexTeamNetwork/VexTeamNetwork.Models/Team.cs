@@ -6,9 +6,9 @@ namespace VexTeamNetwork.Models
 {
     public class Team : Resources
     {
-        public const string RegexMatcher = "^[1-9]\\d{0,3}[A-Z]{0,1}$|^[A-Z]{0,4}[1-9]{0,1}$";
+        public const string RegexMatcher = "^[1-9]\\d{0,3}[A-Z]{0,1}$|^[A-Z]{0,4}[1-9]{0,2}$";
 
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None), StringLength(5, MinimumLength=1)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None), StringLength(6, MinimumLength=1)]
         [RegularExpression(RegexMatcher, ErrorMessage = "Must be a valid team number.")]
         public string Number { get; set; }
 

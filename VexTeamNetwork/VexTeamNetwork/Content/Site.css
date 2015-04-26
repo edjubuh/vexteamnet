@@ -70,7 +70,6 @@ textarea {
     display: inline-block;
     float: right;
     margin-bottom: 10px;
-    overflow: hidden;
     width: auto;
     margin-top: 17.5px;
     -moz-transition: top 0.5s;
@@ -180,6 +179,41 @@ textarea {
         right: 5%;
     }
 }
+
+.autocomplete-suggestions {
+    border: 1px solid #999;
+    background: #FFF;
+    overflow: auto;
+    width: 275px !important;
+}
+
+
+.autocomplete-suggestion {
+    padding: 2px 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.autocomplete-selected {
+    background: #F0F0F0;
+}
+
+.autocomplete-suggestions strong {
+    font-weight: normal;
+    color: #3399FF;
+}
+
+.autocomplete-group {
+    padding: 2px 5px;
+}
+
+    .autocomplete-group strong {
+        display: block;
+        border-bottom: 1px solid #000;
+    }
 
 .navbar-quicklink {
     height: 75px;

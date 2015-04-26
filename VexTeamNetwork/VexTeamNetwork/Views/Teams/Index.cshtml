@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Teams";
 }
-
+@Styles.Render("~/Content/dataTablesCss")
 <div class="table-responsive">
     <table id="teams_table" data-order='[[0, "asc"]]' class="table table-striped">
         <thead>
@@ -56,12 +56,16 @@
 
     </table>
 </div>
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-        $('#teams_table').DataTable({
-            "pageLength": 25,
-            "info": false,
-            "stateSave" : true
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatables");
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#teams_table').DataTable({
+                "pageLength": 25,
+                "info": false,
+                "stateSave": true
+            });
         });
-    });
-</script>
+    </script>
+}

@@ -10,109 +10,107 @@ using VexTeamNetwork.Models;
 
 namespace VexTeamNetwork.Controllers.MVC
 {
-    public class TeamsController : Controller
+    public class CompetitionsController : Controller
     {
         private NetworkContext db = new NetworkContext();
 
-        // GET: Teams
+        // GET: Competitions
         public ActionResult Index()
-        {            
-            return View(db.Teams.ToList());
+        {
+            return View(db.Competitions.ToList());
         }
 
-        // GET: Teams/5
-        [Route("Team/{id}")]
-        [Route("{id:regex(" + Team.RegexMatcher + ")}")]
+        // GET: Competitions/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
-            if (team == null)
+            Competition competition = db.Competitions.Find(id);
+            if (competition == null)
             {
                 return HttpNotFound();
             }
-            return View(team);
+            return View(competition);
         }
 
-        // GET: Teams/Create
+        // GET: Competitions/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Teams/Create
+        // POST: Competitions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Number,TeamName,RobotName,Organization,City,Region,Country,IsRegistered,Grade,Program")] Team team)
+        public ActionResult Create([Bind(Include = "Sku,RobotEventsUrl,Program,Name,Start,End,Season,Venue,Address,City,Region,Postcode,Country,LastModifierUserId,LastModifiedTime")] Competition competition)
         {
             if (ModelState.IsValid)
             {
-                db.Teams.Add(team);
+                db.Competitions.Add(competition);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(team);
+            return View(competition);
         }
 
-        // GET: Teams/Edit/5
+        // GET: Competitions/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
-            if (team == null)
+            Competition competition = db.Competitions.Find(id);
+            if (competition == null)
             {
                 return HttpNotFound();
             }
-            return View(team);
+            return View(competition);
         }
 
-        // POST: Teams/Edit/5
+        // POST: Competitions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Number,Name,RobotName,Organization,City,Region,Country,IsRegistered,Grade,Program")] Team team)
+        public ActionResult Edit([Bind(Include = "Sku,RobotEventsUrl,Program,Name,Start,End,Season,Venue,Address,City,Region,Postcode,Country,LastModifierUserId,LastModifiedTime")] Competition competition)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(team).State = EntityState.Modified;
+                db.Entry(competition).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(team);
+            return View(competition);
         }
 
-        // GET: Teams/Delete/5
+        // GET: Competitions/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
-            if (team == null)
+            Competition competition = db.Competitions.Find(id);
+            if (competition == null)
             {
                 return HttpNotFound();
             }
-            return View(team);
+            return View(competition);
         }
 
-        // POST: Teams/Delete/5
+        // POST: Competitions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Team team = db.Teams.Find(id);
-            db.Teams.Remove(team);
+            Competition competition = db.Competitions.Find(id);
+            db.Competitions.Remove(competition);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

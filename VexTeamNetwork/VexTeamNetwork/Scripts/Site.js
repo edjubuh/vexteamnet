@@ -25,10 +25,7 @@ $("#searchButton").click(function () {
         $(".navbar-search-input").removeClass("navbar-search-hidden");
         $("#search-navbar").removeClass("navbar-search-hidden");
     }
-    else if ($("#searchInput").val().length != 0) {
-        alert($("#searchInput").val());
-    }
-    else {
+    else if ($("#searchInput").val().length == 0) {
         $(".navbar-search-input").addClass("navbar-search-hidden");
         $("#search-navbar").addClass("navbar-search-hidden");
     }
@@ -41,3 +38,16 @@ $("#searchInput").keyup(function (e) {
     if (e.keyCode === 13)
         $("#searchButton").click();
 })
+
+$(function () {
+    $('#searchInput').autocomplete({
+        serviceUrl: '/Home/Autocomplete',
+        paramName: 'term',
+        onSelect: function (suggestion) {
+            window.location.href = suggestion.data.url;
+        },
+        groupBy: 'category',
+        showNoSuggestionNotice: true,
+        appendTo: $("#search-navbar")
+    });
+});

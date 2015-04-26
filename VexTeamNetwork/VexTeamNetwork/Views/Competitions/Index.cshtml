@@ -1,0 +1,63 @@
+﻿@model IEnumerable<VexTeamNetwork.Models.Competition>
+
+@{
+    ViewBag.Title = "Competitions";
+}
+
+<div class="table-responsive">
+    <table id="events_table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <td>
+                    @Html.DisplayNameFor(model => model.Season)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Time)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Venue)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.Location)
+                </td>
+            </tr>
+        </thead>
+        @foreach (VexTeamNetwork.Models.Competition item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(Html.DisplayFor(modelItem => item.Name).ToString(), "Details", new { id = item.Sku })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Season)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Venue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatables");
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#events_table').DataTable({
+                "pageLength": 25,
+                "info": false,
+                "processing": true
+            });
+        });
+    </script>
+}
