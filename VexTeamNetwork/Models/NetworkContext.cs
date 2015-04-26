@@ -56,7 +56,5 @@ namespace VexTeamNetwork.Models
         public DbSet<Competition> Competitions { get; set; }
 
         public DbSet<Division> Divisions { get; set; }
-
-        public DbSet<Match> Matches { get; set; }
     }
 }

@@ -29,9 +29,7 @@ namespace VexTeamNetwork
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/Content/dataTablesCss").Include(
-                "~/Content/dataTables.bootstrap.css",
-                "~/Content/dataTablesStyle.css"));
+            bundles.Add(new StyleBundle("~/Content/dataTablesCss").Include("~/Content/dataTables.bootstrap.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
                 "~/Scripts/jquery.dataTables.js",

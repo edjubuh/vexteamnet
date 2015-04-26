@@ -1,6 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using VexTeamNetwork.Models;
 
@@ -32,7 +36,6 @@ namespace VexTeamNetwork.Controllers.MVC
         }
 
         // GET: Competitions/Create
-        [Authorize(Roles="Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -43,8 +46,7 @@ namespace VexTeamNetwork.Controllers.MVC
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Create([Bind(Include = "Sku,RobotEventsUrl,Program,Name,Start,End,Season,Venue,Address,City,Region,Postcode,Country,LastModifiedTime,LastModifiedUsername")] Competition competition)
+        public ActionResult Create([Bind(Include = "Sku,RobotEventsUrl,Program,Name,Start,End,Season,Venue,Address,City,Region,Postcode,Country,LastModifierUserId,LastModifiedTime")] Competition competition)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +59,6 @@ namespace VexTeamNetwork.Controllers.MVC
         }
 
         // GET: Competitions/Edit/5
-        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -77,8 +78,7 @@ namespace VexTeamNetwork.Controllers.MVC
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Edit([Bind(Include = "Sku,RobotEventsUrl,Program,Name,Start,End,Season,Venue,Address,City,Region,Postcode,Country,LastModifiedTime,LastModifiedUsername")] Competition competition)
+        public ActionResult Edit([Bind(Include = "Sku,RobotEventsUrl,Program,Name,Start,End,Season,Venue,Address,City,Region,Postcode,Country,LastModifierUserId,LastModifiedTime")] Competition competition)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,6 @@ namespace VexTeamNetwork.Controllers.MVC
         }
 
         // GET: Competitions/Delete/5
-        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -108,7 +107,6 @@ namespace VexTeamNetwork.Controllers.MVC
         // POST: Competitions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteConfirmed(string id)
         {
             Competition competition = db.Competitions.Find(id);
