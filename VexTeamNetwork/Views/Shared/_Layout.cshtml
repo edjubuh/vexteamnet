@@ -12,8 +12,8 @@
         <title>@ViewBag.PageTitle</title>
     }
     @Styles.Render("~/Content/css")
+    @RenderSection("styles", false)
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">

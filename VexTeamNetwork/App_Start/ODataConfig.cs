@@ -16,7 +16,7 @@ namespace VexTeamNetwork
             builder.AddEnumType(typeof(Grade));
             builder.AddEnumType(typeof(Program));
             builder.EntitySet<Team>("Teams");
-            //builder.EntitySet<Competition>("Competitions");
+            builder.EntitySet<Competition>("Competitions");
 
             config.MapODataServiceRoute(
                 routePrefix: "odata",

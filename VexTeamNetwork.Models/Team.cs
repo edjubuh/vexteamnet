@@ -6,12 +6,18 @@ namespace VexTeamNetwork.Models
 {
     public class Team : Resources
     {
+        public Team()
+        {
+            Grade = Grade.Unknown;
+            Program = Program.Unknown;
+        }
         public const string RegexMatcher = "^[1-9]\\d{0,3}[A-Z]{0,1}$|^[A-Z]{0,4}[1-9]{0,2}$";
 
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None), StringLength(6, MinimumLength=1)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None), StringLength(6, MinimumLength = 1)]
         [RegularExpression(RegexMatcher, ErrorMessage = "Must be a valid team number.")]
         public string Number { get; set; }
 
+        [Display(Name = "Team Name")]
         public string TeamName { get; set; }
 
         [Display(Name = "Robot Name")]
@@ -40,8 +46,8 @@ namespace VexTeamNetwork.Models
 
         public bool IsRegistered { get; set; }
 
-        public Grade? Grade { get; set; }
+        public Grade Grade { get; set; }
 
-        public Program? Program { get; set; }
+        public Program Program { get; set; }
     }
 }
