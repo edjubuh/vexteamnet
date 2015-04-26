@@ -60,6 +60,7 @@
     <Compile Include="Competition.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="Match.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Team.cs" />

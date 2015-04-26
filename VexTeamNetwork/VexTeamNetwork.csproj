@@ -253,7 +253,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\ApiControllerSelector.cs" />
+    <Compile Include="Controllers\API\OData\CompetitionsController.cs" />
     <Compile Include="Controllers\API\OData\TeamsController.cs" />
+    <Compile Include="Controllers\API\Vanilla\CompetitionsController.cs" />
     <Compile Include="Controllers\API\Vanilla\TeamsController.cs" />
     <Compile Include="Controllers\EnumHelper.cs" />
     <Compile Include="Controllers\MVC\AccountController.cs" />
@@ -289,6 +291,10 @@
     <Compile Include="NetworkMigrations\201504261626509_AddedEventsAndDivisions.Designer.cs">
       <DependentUpon>201504261626509_AddedEventsAndDivisions.cs</DependentUpon>
     </Compile>
+    <Compile Include="NetworkMigrations\201504261906557_AddedMatches.cs" />
+    <Compile Include="NetworkMigrations\201504261906557_AddedMatches.Designer.cs">
+      <DependentUpon>201504261906557_AddedMatches.cs</DependentUpon>
+    </Compile>
     <Compile Include="NetworkMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -299,6 +305,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap.css" />
+    <Content Include="Content\dataTablesStyle.css" />
+    <Content Include="Content\TeamDetails.css" />
     <Content Include="Content\vtn_logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -427,6 +435,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NetworkMigrations\201504261626509_AddedEventsAndDivisions.resx">
       <DependentUpon>201504261626509_AddedEventsAndDivisions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkMigrations\201504261906557_AddedMatches.resx">
+      <DependentUpon>201504261906557_AddedMatches.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

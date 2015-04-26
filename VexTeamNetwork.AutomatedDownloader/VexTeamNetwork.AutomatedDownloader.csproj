@@ -150,6 +150,7 @@
     <Compile Include="Credentials.cs" />
     <Compile Include="Download.cs" />
     <Compile Include="Models\BooleanConverter.cs" />
+    <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\Enum.cs" />
     <Compile Include="Models\EnumConverter.cs" />
     <Compile Include="Models\RootObject.cs" />
