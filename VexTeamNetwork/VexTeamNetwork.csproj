@@ -248,15 +248,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\ODataConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\ApiControllerSelector.cs" />
-    <Compile Include="Controllers\API\OData\CompetitionsController.cs" />
-    <Compile Include="Controllers\API\OData\TeamsController.cs" />
-    <Compile Include="Controllers\API\Vanilla\CompetitionsController.cs" />
-    <Compile Include="Controllers\API\Vanilla\TeamsController.cs" />
+    <Compile Include="Controllers\API\CompetitionsController.cs" />
+    <Compile Include="Controllers\API\TeamsController.cs" />
     <Compile Include="Controllers\EnumHelper.cs" />
     <Compile Include="Controllers\MVC\AccountController.cs" />
     <Compile Include="Controllers\MVC\CompetitionsController.cs" />
