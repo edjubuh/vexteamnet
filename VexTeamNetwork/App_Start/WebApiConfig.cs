@@ -14,6 +14,7 @@ namespace VexTeamNetwork
         {
             config.MapHttpAttributeRoutes();
 
+
             // Web API configuration and services
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.AddEnumType(typeof(Grade));
@@ -22,13 +23,11 @@ namespace VexTeamNetwork
             builder.EntitySet<Competition>("Competitions");
 
             // Web API configuration and services
-            var ODataFormatters = ODataMediaTypeFormatters.Create();
-            config.Formatters.InsertRange(0, ODataFormatters);
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var formatters = ODataMediaTypeFormatters.Create();
+            config.Formatters.Clear();
+            config.Formatters.AddRange(formatters);
+            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.EnableCaseInsensitive(true);
-
-            
-            var route = config.MapODataServiceRoute("ODataRoute", "odata", builder.GetEdmModel());
 
             config.MapODataServiceRoute(
                 routePrefix: "odata",
