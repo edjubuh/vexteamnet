@@ -1,10 +1,10 @@
-﻿using System.Net.Http.Formatting;
-using System.Web.Http;
-using System.Web.Http.Dispatcher;
+﻿using System.Web.Http;
+using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using System.Web.OData.Routing;
 using System.Web.OData.Formatter;
 using Newtonsoft.Json.Serialization;
-using VexTeamNetwork.Controllers.WebApi;
+using VexTeamNetwork.Models;
 
 namespace VexTeamNetwork
 {
@@ -12,29 +12,27 @@ namespace VexTeamNetwork
     {
         public static void Register(HttpConfiguration config)
         {
+            config.MapHttpAttributeRoutes();
+
+
             // Web API configuration and services
-            config.AddODataQueryFilter();
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.AddEnumType(typeof(Grade));
+            builder.AddEnumType(typeof(Program));
+            builder.EntitySet<Team>("Teams");
+            builder.EntitySet<Competition>("Competitions");
+
+            // Web API configuration and services
+            var formatters = ODataMediaTypeFormatters.Create();
             config.Formatters.Clear();
-            config.Formatters.Add(new JsonMediaTypeFormatter());
-            config.Formatters.Add(new XmlMediaTypeFormatter());
-            config.Formatters.Add(new FormUrlEncodedMediaTypeFormatter());
-            config.Formatters.InsertRange(3, ODataMediaTypeFormatters.Create());
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.AddRange(formatters);
+            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.EnableCaseInsensitive(true);
-            
-            // Web API routes
-            config.Routes.MapHttpRoute(
-                name: "DefaultApiGetById",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id =  RouteParameter.Optional },
-                constraints: new { id = "\\d+"}
-                );
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}");
-
-            config.Services.Replace(typeof(IHttpControllerSelector), new ApiControllerSelector(config));
+            config.MapODataServiceRoute(
+                routePrefix: "odata",
+                routeName: "odata",
+                model: builder.GetEdmModel());
         }
     }
 }

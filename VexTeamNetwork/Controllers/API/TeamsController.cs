@@ -1,9 +1,11 @@
-﻿using System.Data.Entity.Infrastructure;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
 using System.Web.OData;
+using System.Web.OData.Query;
 using VexTeamNetwork.Models;
 
 namespace VexTeamNetwork.Controllers.WebApi.OData
@@ -13,24 +15,24 @@ namespace VexTeamNetwork.Controllers.WebApi.OData
         NetworkContext db = new NetworkContext();
 
         //[HttpGet]
-        [EnableQuery, ResponseType(typeof(IQueryable<Team>))]
-        public IHttpActionResult Get()
+        [EnableQuery(AllowedArithmeticOperators = AllowedArithmeticOperators.None,
+            AllowedLogicalOperators = AllowedLogicalOperators.All,
+            AllowedQueryOptions = AllowedQueryOptions.All,
+            EnsureStableOrdering = true)]
+        public IQueryable<Team> Get()
         {
-            return Ok(db.Teams);
+            return db.Teams;
         }
 
         //[HttpGet]
-        [EnableQuery, ResponseType(typeof(SingleResult<Team>))]
-        public IHttpActionResult Get([FromODataUri]string key)
+        [EnableQuery]
+        public SingleResult<Team> Get([FromODataUri]string key)
         {
-            if (!TeamExists(key))
-                return NotFound();
             IQueryable<Team> result = db.Teams.Where(t => t.Number == key);
-            return Ok(SingleResult.Create(result));
+            return SingleResult.Create(result);
         }
 
         [Authorize(Roles = "Administrator")]
-        [ResponseType(typeof(Team))]
         public async Task<IHttpActionResult> Post(Team team)
         {
             if (!ModelState.IsValid)
@@ -53,7 +55,6 @@ namespace VexTeamNetwork.Controllers.WebApi.OData
         }
 
         [Authorize(Roles = "Administrator")]
-        [ResponseType(typeof(Team))]
         public async Task<IHttpActionResult> Patch([FromODataUri]string key, Delta<Team> delta)
         {
             if (!ModelState.IsValid)
@@ -76,7 +77,6 @@ namespace VexTeamNetwork.Controllers.WebApi.OData
         }
 
         [Authorize(Roles = "Administrator")]
-        [ResponseType(typeof(Team))]
         public async Task<IHttpActionResult> Put([FromODataUri] string key, Team team)
         {
             if (!ModelState.IsValid)
