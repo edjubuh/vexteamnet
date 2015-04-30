@@ -5,6 +5,8 @@ using System.Web.OData.Routing;
 using System.Web.OData.Formatter;
 using Newtonsoft.Json.Serialization;
 using VexTeamNetwork.Models;
+using System.Net.Http.Formatting;
+using VexTeamNetwork.Controllers.API;
 
 namespace VexTeamNetwork
 {
@@ -25,10 +27,14 @@ namespace VexTeamNetwork
             // Web API configuration and services
             var formatters = ODataMediaTypeFormatters.Create();
             config.Formatters.Clear();
-            config.Formatters.AddRange(formatters);
+            config.Formatters.InsertRange(0, formatters);
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            config.EnableCaseInsensitive(true);
-
+            //config.EnableCaseInsensitive(true);
+            /*
+            var traceWriter = config.EnableSystemDiagnosticsTracing();
+            traceWriter.IsVerbose = true;
+            traceWriter.MinimumLevel = System.Web.Http.Tracing.TraceLevel.Debug;
+            */
             config.MapODataServiceRoute(
                 routePrefix: "odata",
                 routeName: "odata",
