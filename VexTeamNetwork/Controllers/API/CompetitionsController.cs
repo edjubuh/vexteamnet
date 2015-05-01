@@ -9,7 +9,7 @@ using VexTeamNetwork.Models;
 
 namespace VexTeamNetwork.Controllers.WebApi.OData
 {
-    public class CompetitionsController : ODataController
+    public partial class CompetitionsController : ODataController
     {
         private NetworkContext db = new NetworkContext();
 
@@ -27,6 +27,15 @@ namespace VexTeamNetwork.Controllers.WebApi.OData
             if (!CompetitionExists(key))
                 return NotFound();
             return Ok(SingleResult.Create(db.Competitions.Where(c => c.Sku == key)));
+        }
+
+        // GET: odata/Competitions(5)/Divisions
+        [EnableQuery, ResponseType(typeof(IQueryable<Division>))]
+        public IHttpActionResult GetDivisions([FromODataUri] string key)
+        {
+            if (!CompetitionExists(key))
+                return NotFound();
+            return Ok(db.Divisions.Where(div => div.Sku == key));
         }
 
         [Authorize(Roles="Administrator")]

@@ -240,8 +240,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\CompetitionsController.cs" />
-    <Compile Include="Controllers\API\ContentNegotiator.cs" />
-    <Compile Include="Controllers\API\ListWrapperCollection.cs" />
+    <Compile Include="Controllers\API\DivisionsController.cs" />
+    <Compile Include="Controllers\API\CompositeKeyRoutingConvention.cs" />
     <Compile Include="Controllers\API\TeamsController.cs" />
     <Compile Include="Controllers\EnumHelper.cs" />
     <Compile Include="Controllers\MVC\AccountController.cs" />
@@ -280,6 +280,10 @@
     <Compile Include="NetworkMigrations\201504261906557_AddedMatches.cs" />
     <Compile Include="NetworkMigrations\201504261906557_AddedMatches.Designer.cs">
       <DependentUpon>201504261906557_AddedMatches.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkMigrations\201505012245015_UpdatedDivisionsToExtendResources.cs" />
+    <Compile Include="NetworkMigrations\201505012245015_UpdatedDivisionsToExtendResources.Designer.cs">
+      <DependentUpon>201505012245015_UpdatedDivisionsToExtendResources.cs</DependentUpon>
     </Compile>
     <Compile Include="NetworkMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -424,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NetworkMigrations\201504261906557_AddedMatches.resx">
       <DependentUpon>201504261906557_AddedMatches.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkMigrations\201505012245015_UpdatedDivisionsToExtendResources.resx">
+      <DependentUpon>201505012245015_UpdatedDivisionsToExtendResources.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VexTeamNetwork.Models
 {
-    public class Division
+    public class Division : Resources
     {
         [Key, ForeignKey("Competition"), Column(Order = 0)]
         public string Sku { get; set; }
