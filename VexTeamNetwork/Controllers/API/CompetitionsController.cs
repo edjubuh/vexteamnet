@@ -67,7 +67,7 @@ namespace VexTeamNetwork.Controllers.WebApi.OData
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var comp = await db.Teams.FindAsync(key);
+            var comp = await db.Competitions.FindAsync(key);
             if (comp == null)
                 return NotFound();
             try

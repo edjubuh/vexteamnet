@@ -25,21 +25,12 @@ namespace VexTeamNetwork
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.AddEnumType(typeof(Grade));
             builder.AddEnumType(typeof(Program));
+            builder.AddEnumType(typeof(Round));
             builder.EntitySet<Team>("Teams");
             builder.EntitySet<Competition>("Competitions");
             builder.EntitySet<Division>("Divisions");
+            builder.EntitySet<Match>("Matches");
             var EdmModel = builder.GetEdmModel();
-
-            //var divisions = (EdmEntitySet)EdmModel.EntityContainer.FindEntitySet("Divisions");
-            //var divisionType = (EdmEntityType)EdmModel.FindDeclaredType("VexTeamNetwork.Models.Division");
-            //var divisionProperty = new EdmNavigationPropertyInfo();
-            //divisionProperty.TargetMultiplicity = EdmMultiplicity.Many;
-            //divisionProperty.Target = (EdmEntityType)EdmModel.FindDeclaredType("VexTeamNetwork.Models.Competition");
-            //divisionProperty.ContainsTarget = false;
-            //divisionProperty.OnDelete = EdmOnDeleteAction.None;
-            //divisionProperty.Name = "Divisions";
-
-            //divisions.AddNavigationTarget(divisionType.AddUnidirectionalNavigation(divisionProperty), divisions);
 
             //builder.EnableLowerCamelCase();
 

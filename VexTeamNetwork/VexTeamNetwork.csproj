@@ -242,6 +242,7 @@
     <Compile Include="Controllers\API\CompetitionsController.cs" />
     <Compile Include="Controllers\API\DivisionsController.cs" />
     <Compile Include="Controllers\API\CompositeKeyRoutingConvention.cs" />
+    <Compile Include="Controllers\API\MatchesController.cs" />
     <Compile Include="Controllers\API\TeamsController.cs" />
     <Compile Include="Controllers\EnumHelper.cs" />
     <Compile Include="Controllers\MVC\AccountController.cs" />
