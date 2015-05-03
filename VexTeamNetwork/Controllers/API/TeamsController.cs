@@ -1,127 +1,138 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Dispatcher;
+using System.Web.Http.Description;
 using System.Web.OData;
-using System.Web.OData.Builder;
-using System.Web.OData.Extensions;
-using System.Web.OData.Formatter;
-using System.Web.OData.Formatter.Serialization;
-using System.Web.OData.Query;
-using System.Xml.Linq;
-using Microsoft.OData.Core;
-using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Library;
-using Microsoft.Spatial;
 using VexTeamNetwork.Models;
 
-namespace VexTeamNetwork.Controllers.WebApi.OData
+namespace VexTeamNetwork.Controllers.API
 {
-    public class TeamsController : ODataController
+    public class TeamsController : ApiController
     {
-        NetworkContext db = new NetworkContext();
+        private NetworkContext db = new NetworkContext();
 
-        //[HttpGet]
-        [EnableQuery(AllowedArithmeticOperators = AllowedArithmeticOperators.None,
-            AllowedLogicalOperators = AllowedLogicalOperators.All,
-            AllowedQueryOptions = AllowedQueryOptions.All,
-            EnsureStableOrdering = true)]
-        public IQueryable<Team> Get()
+        // GET: api/Teams
+        [EnableQuery]
+        public IQueryable<Team> GetTeams()
         {
             return db.Teams;
         }
 
-        //[HttpGet]
-        [EnableQuery]
-        public SingleResult<Team> Get([FromODataUri]string key)
+        // GET: api/Teams/5
+        [ResponseType(typeof(Team))]
+        public IHttpActionResult GetTeam(string id)
         {
-            IQueryable<Team> result = db.Teams.Where(t => t.Number == key);
-            return SingleResult.Create(result);
-        }
-
-        [Authorize(Roles = "Administrator")]
-        public async Task<IHttpActionResult> Post(Team team)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            db.Teams.Add(team);
-            await db.SaveChangesAsync();
-            return Created(team);
-        }
-
-        [Authorize(Roles = "Administrator")]
-        public async Task<IHttpActionResult> Delete([FromODataUri]string key)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            if (!TeamExists(key))
-                return NotFound();
-            db.Teams.Remove(db.Teams.First(t => t.Number == key));
-            await db.SaveChangesAsync();
-            return Ok();
-        }
-
-        [Authorize(Roles = "Administrator")]
-        public async Task<IHttpActionResult> Patch([FromODataUri]string key, Delta<Team> delta)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var team = await db.Teams.FindAsync(key);
+            Team team = db.Teams.Find(id);
             if (team == null)
+            {
                 return NotFound();
-            delta.Patch(team);
+            }
+
+            return Ok(team);
+        }
+
+        // PUT: api/Teams/5
+        [Authorize(Roles = "Administrator")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutTeam(string id, Team team)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != team.Number)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(team).State = EntityState.Modified;
+
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TeamExists(key))
+                if (!TeamExists(id))
+                {
                     return NotFound();
-                else throw;
+                }
+                else
+                {
+                    throw;
+                }
             }
-            return Updated(team);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // POST: api/Teams
         [Authorize(Roles = "Administrator")]
-        public async Task<IHttpActionResult> Put([FromODataUri] string key, Team team)
+        [ResponseType(typeof(Team))]
+        public IHttpActionResult PostTeam(Team team)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-            if (key != team.Number)
-                return BadRequest();
-            db.Entry(team).State = System.Data.Entity.EntityState.Modified;
+            }
+
+            db.Teams.Add(team);
+
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
-            catch
+            catch (DbUpdateException)
             {
-                if (!TeamExists(key))
-                    return NotFound();
-                else throw;
+                if (TeamExists(team.Number))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
             }
-            return Updated(team);
+
+            return CreatedAtRoute("DefaultApi", new { id = team.Number }, team);
         }
 
-        private bool TeamExists(string number)
+        // DELETE: api/Teams/5
+        [Authorize(Roles = "Administrator")]
+        [ResponseType(typeof(Team))]
+        public IHttpActionResult DeleteTeam(string id)
         {
-            return db.Teams.Any(t => t.Number == number);
+            Team team = db.Teams.Find(id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            db.Teams.Remove(team);
+            db.SaveChanges();
+
+            return Ok(team);
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            if (disposing)
+            {
+                db.Dispose();
+            }
             base.Dispose(disposing);
+        }
+
+        private bool TeamExists(string id)
+        {
+            return db.Teams.Count(e => e.Number == id) > 0;
         }
     }
 }

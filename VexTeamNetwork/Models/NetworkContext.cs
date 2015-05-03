@@ -11,7 +11,7 @@ namespace VexTeamNetwork.Models
     {
         public NetworkContext() : base("NetworkConnection")
         {
-
+            //Configuration.ProxyCreationEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

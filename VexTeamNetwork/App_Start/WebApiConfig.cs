@@ -1,16 +1,7 @@
-﻿using System.Web.Http;
-using System.Web.OData.Builder;
-using System.Web.OData.Extensions;
-using System.Web.OData.Routing;
-using System.Web.OData.Formatter;
-using Newtonsoft.Json.Serialization;
+﻿using System.Runtime.Serialization;
+using System.Web.Http;
+using Newtonsoft.Json;
 using VexTeamNetwork.Models;
-using System.Net.Http.Formatting;
-using VexTeamNetwork.Controllers;
-using System.Web.OData.Routing.Conventions;
-using VexTeamNetwork.Controllers.WebApi.OData;
-using Microsoft.OData.Edm.Library;
-using Microsoft.OData.Edm;
 
 namespace VexTeamNetwork
 {
@@ -18,40 +9,24 @@ namespace VexTeamNetwork
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Formatters.XmlFormatter.SetSerializer<Division>(new DataContractSerializer(typeof(Division), null, int.MaxValue, false, true, null));
+
             config.MapHttpAttributeRoutes();
 
+            config.Routes.MapHttpRoute(
+                "WebApiDefault",
+                "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
 
-            // Web API configuration and services
-            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            builder.AddEnumType(typeof(Grade));
-            builder.AddEnumType(typeof(Program));
-            builder.AddEnumType(typeof(Round));
-            builder.EntitySet<Team>("Teams");
-            builder.EntitySet<Competition>("Competitions");
-            builder.EntitySet<Division>("Divisions");
-            builder.EntitySet<Match>("Matches");
-            var EdmModel = builder.GetEdmModel();
+            config.Routes.MapHttpRoute(
+                "DivisionsRoute",
+                "api/{controller}/{sku}/{action}/{name}",
+                defaults: new { name = RouteParameter.Optional });
 
-            //builder.EnableLowerCamelCase();
-
-            // Web API configuration and services
-            var formatters = ODataMediaTypeFormatters.Create();
-            config.Formatters.Clear();
-            config.Formatters.InsertRange(0, formatters);
-
-            var conventions = ODataRoutingConventions.CreateDefault();
-            conventions.Insert(0, new CompositeKeyRoutingConvention());
-            
-            var traceWriter = config.EnableSystemDiagnosticsTracing();
-            //traceWriter.IsVerbose = true;
-            traceWriter.MinimumLevel = System.Web.Http.Tracing.TraceLevel.Debug;
-
-            config.MapODataServiceRoute(
-                routePrefix: "odata",
-                routeName: "odata",
-                model: EdmModel,
-                pathHandler: new DefaultODataPathHandler(),
-                routingConventions: conventions);
+            config.Routes.MapHttpRoute(
+                "MatchesRoute",
+                "api/Competitions/{sku}/Divisions/{div}/{controller}/{round}/{instance}/{number}",
+                defaults: new { round = RouteParameter.Optional, instance = RouteParameter.Optional, number = RouteParameter.Optional });
         }
     }
 }

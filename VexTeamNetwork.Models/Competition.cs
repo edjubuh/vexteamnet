@@ -1,38 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace VexTeamNetwork.Models
 {
+    [DataContract]
     public class Competition : Resources
     {
         public const string RegexMatcher = "^RE-(VEXU|VRC)-\\d{2}-\\d{4}$";
 
-        [Key, MaxLength(16), RegularExpression(RegexMatcher)]
+        [Key, MaxLength(16), RegularExpression(RegexMatcher), DataMember]
         public string Sku { get; set; }
 
-        [Url]
+        [Url, DataMember]
         public string RobotEventsUrl { get; set; }
 
+        [DataMember]
         public Program Program { get; set; }
 
+        [DataMember]
         public string Name { get; set; }
 
         //[Column(TypeName = "datetime2")]
+        [DataMember]
         public DateTime Start { get; set; }
 
         //[Column(TypeName = "datetime2")]
+        [DataMember]
         public DateTime End { get; set; }
 
+        [DataMember]
         public string Season { get; set; }
 
-        public string Venue { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string Region { get; set; }
-        public string Postcode { get; set; }
-        public string Country { get; set; }
+        [DataMember] public string Venue { get; set; }
+        [DataMember] public string Address { get; set; }
+        [DataMember] public string City { get; set; }
+        [DataMember] public string Region { get; set; }
+        [DataMember] public string Postcode { get; set; }
+        [DataMember] public string Country { get; set; }
 
+        [DataMember]
         public ICollection<Division> Divisions { get; set; }
 
         public virtual string Time

@@ -41,6 +41,7 @@ namespace VexTeamNetwork.Models
         [Display(Name = "Final", ShortName = "F")]
         Final,
         [Display(Name = "Round Robin", ShortName = "RR")]
-        RoundRobin
+        RoundRobin,
+        Other
     }
 }

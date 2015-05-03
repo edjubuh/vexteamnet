@@ -1,126 +1,130 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.OData;
-using System.Web.OData.Routing;
 using VexTeamNetwork.Models;
 
-namespace VexTeamNetwork.Controllers.WebApi.OData
+namespace VexTeamNetwork.Controllers.API
 {
-    public class DivisionsController : ODataController
+    public partial class CompetitionsController : ApiController
     {
-        private NetworkContext db = new NetworkContext();
-
-        [ODataRoute("Divisions(Sku={Sku})")]
-        [EnableQuery, ResponseType(typeof(IQueryable<Division>))]
-        public IHttpActionResult GetDivision([FromODataUri] string Sku)
+        // GET: api/Competitions/RE-VRC-00-0000/Divisions
+        [EnableQuery, HttpGet, ActionName("Divisions")]
+        public IQueryable<Division> GetDivisions(string sku)
         {
-            if (!CompetitionExists(Sku))
-                return NotFound();
-            return Ok(db.Divisions.Where(div => div.Sku == Sku));
+            db.Configuration.ProxyCreationEnabled = false;
+            var divs = db.Divisions.Where(div => div.Sku == sku);
+            return divs;
         }
 
-        [ODataRoute("Divisions(Sku={Sku},Name={Name})")]
-        [EnableQuery, ResponseType(typeof(Division))]
-        public IHttpActionResult GetDivision([FromODataUri] string Sku, [FromODataUri]string Name)
+        // GET: api/Competitions/RE-VRC-00-0000/Divisions/5
+        [ResponseType(typeof(Division))]
+        [HttpGet, ActionName("Divisions")]
+        public IHttpActionResult GetDivision(string sku, string name)
         {
-            if (!CompetitionExists(Sku) || !DivisionExists(Sku, Name))
+            db.Configuration.ProxyCreationEnabled = false;
+            Division division = db.Divisions.Find(sku, name);
+            if (division == null)
+            {
                 return NotFound();
+            }
 
-            return Ok(SingleResult.Create(db.Divisions.Where(d => d.Sku == Sku && d.Name == Name)));
+            return Ok(division);
         }
 
-        [ODataRoute("Divisions(Sku={Sku},Name={Name})/Matches")]
-        [EnableQuery, ResponseType(typeof(IQueryable<Match>))]
-        public IHttpActionResult GetMatches([FromODataUri] string Sku, [FromODataUri] string Name)
-        {
-            if (!CompetitionExists(Sku) || !DivisionExists(Sku, Name))
-                return NotFound();
-
-            return Ok(db.Matches.Where(match => match.Sku == Sku && match.DivisionName == Name));
-        }
-
+        // PUT: api/Competitions/RE-VRC-00-0000/Divisions/5
         [Authorize(Roles = "Administrator")]
-        [ResponseType(typeof(Competition))]
-        public async Task<IHttpActionResult> Post(Division comp)
+        [ResponseType(typeof(void))]
+        [HttpPut, ActionName("Divisions")]
+        public IHttpActionResult PutDivision(string sku, string name, Division division)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-            db.Divisions.Add(comp);
-            await db.SaveChangesAsync();
-            return Created(comp);
-        }
+            }
 
-        [Authorize(Roles = "Administrator")]
-        [ODataRoute("Divisions(Sku={key},Name={name})")]
-        public async Task<IHttpActionResult> Delete([FromODataUri] string key, [FromODataUri] string name)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            if (!CompetitionExists(key))
-                return NotFound();
-            db.Divisions.Remove(db.Divisions.Find(key));
-            await db.SaveChangesAsync();
-            return Ok();
-        }
+            if (sku != division.Sku)
+            {
+                return BadRequest();
+            }
 
-        [Authorize(Roles = "Administrator")]
-        [ODataRoute("Divisions(Sku={key},Name={name})")]
-        [ResponseType(typeof(Competition))]
-        public async Task<IHttpActionResult> Patch([FromODataUri] string key, [FromODataUri] string name, Delta<Division> delta)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var div = await db.Divisions.FindAsync(key);
-            if (div == null)
-                return NotFound();
+            db.Entry(division).State = EntityState.Modified;
+
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DivisionExists(key, name))
+                if (!DivisionExists(sku, name))
+                {
                     return NotFound();
-                else throw;
+                }
+                else
+                {
+                    throw;
+                }
             }
-            return Updated(div);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // POST: api/Competitions/RE-VRC-00-0000/Divisions
         [Authorize(Roles = "Administrator")]
-        [ODataRoute("Divisions(Sku={key},Name={name})")]
         [ResponseType(typeof(Division))]
-        public async Task<IHttpActionResult> Put([FromODataUri] string key, [FromODataUri] string name, Division division)
+        [HttpPost, ActionName("Divisions")]
+        public IHttpActionResult PostDivision(Division division)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-            if (key != division.Sku)
-                return BadRequest();
-            db.Entry(division).State = EntityState.Modified;
+            }
+
+            db.Divisions.Add(division);
+
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
-            catch
+            catch (DbUpdateException)
             {
-                if (!DivisionExists(key, name))
-                    return NotFound();
-                else throw;
+                if (DivisionExists(division.Sku, division.Name))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
             }
-            return Updated(division);
+
+            return CreatedAtRoute("DefaultApi", new { id = division.Sku }, division);
         }
 
-        private bool CompetitionExists(string sku)
+        // DELETE: api/Competitions/RE-VRC-00-0000/Divisions/5
+        [Authorize(Roles = "Administrator")]
+        [ResponseType(typeof(Division))]
+        [HttpDelete, ActionName("Divisions")]
+        public IHttpActionResult DeleteDivision(string id)
         {
-            return db.Competitions.Any(c => c.Sku == sku);
+            Division division = db.Divisions.Find(id);
+            if (division == null)
+            {
+                return NotFound();
+            }
+
+            db.Divisions.Remove(division);
+            db.SaveChanges();
+
+            return Ok(division);
         }
 
         private bool DivisionExists(string sku, string name)
         {
-            return db.Divisions.Any(d => d.Name == name && d.Sku == sku);
+            return db.Divisions.Count(e => e.Sku == sku && e.Name == name) > 0;
         }
     }
 }

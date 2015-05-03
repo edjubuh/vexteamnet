@@ -1,119 +1,134 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.OData;
 using VexTeamNetwork.Models;
 
-namespace VexTeamNetwork.Controllers.WebApi.OData
+namespace VexTeamNetwork.Controllers.API
 {
-    public partial class CompetitionsController : ODataController
+    public partial class CompetitionsController : ApiController
     {
         private NetworkContext db = new NetworkContext();
 
-        // GET: odata/Competitions
-        [EnableQuery, ResponseType(typeof(IQueryable<Competition>))]
-        public IHttpActionResult Get()
+        // GET: api/Competitions
+        [EnableQuery]
+        public IQueryable<Competition> GetCompetitions()
         {
-            return Ok(db.Competitions);
+            return db.Competitions.Include(c => c.Divisions);
         }
 
-        // GET: odata/Competitions(5)
-        [EnableQuery, ResponseType(typeof(Competition))]
-        public IHttpActionResult GetCompetition([FromODataUri] string key)
-        {
-            if (!CompetitionExists(key))
-                return NotFound();
-            return Ok(SingleResult.Create(db.Competitions.Where(c => c.Sku == key)));
-        }
-
-        // GET: odata/Competitions(5)/Divisions
-        [EnableQuery, ResponseType(typeof(IQueryable<Division>))]
-        public IHttpActionResult GetDivisions([FromODataUri] string key)
-        {
-            if (!CompetitionExists(key))
-                return NotFound();
-            return Ok(db.Divisions.Where(div => div.Sku == key));
-        }
-
-        [Authorize(Roles="Administrator")]
+        // GET: api/Competitions/5
         [ResponseType(typeof(Competition))]
-        public async Task<IHttpActionResult> Post(Competition comp)
+        public IHttpActionResult GetCompetition(string id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            db.Competitions.Add(comp);
-            await db.SaveChangesAsync();
-            return Created(comp);
-        }
-
-        [Authorize(Roles="Administrator")]
-        public async Task<IHttpActionResult> Delete([FromODataUri] string key)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            if (!CompetitionExists(key))
-                return NotFound();
-            db.Competitions.Remove(db.Competitions.Find(key));
-            await db.SaveChangesAsync();
-            return Ok();
-        }
-
-        [Authorize(Roles="Administrator")]
-        [ResponseType(typeof(Competition))]
-        public async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<Competition> delta)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var comp = await db.Competitions.FindAsync(key);
-            if (comp == null)
-                return NotFound();
-            try
+            Competition competition = db.Competitions.Include(c => c.Divisions).Where(c => c.Sku == id).FirstOrDefault();
+            if (competition == null)
             {
-                await db.SaveChangesAsync();
+                return NotFound();
             }
-            catch(DbUpdateConcurrencyException)
-            {
-                if (!CompetitionExists(key))
-                    return NotFound();
-                else throw;
-            }
-            return Updated(comp);
+
+            return Ok(competition);
         }
 
-        [Authorize(Roles="Administrator")]
-        [ResponseType(typeof(Competition))]
-        public async Task<IHttpActionResult> Put([FromODataUri] string key, Competition comp)
+        // PUT: api/Competitions/5
+        [Authorize(Roles = "Administrator")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutCompetition(string id, Competition competition)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-            if (key != comp.Sku)
+            }
+
+            if (id != competition.Sku)
+            {
                 return BadRequest();
-            db.Entry(comp).State = EntityState.Modified;
+            }
+
+            db.Entry(competition).State = EntityState.Modified;
+
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
-            catch
+            catch (DbUpdateConcurrencyException)
             {
-                if (!CompetitionExists(key))
+                if (!CompetitionExists(id))
+                {
                     return NotFound();
-                else throw;
+                }
+                else
+                {
+                    throw;
+                }
             }
-            return Updated(comp);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private bool CompetitionExists(string key)
+        // POST: api/Competitions
+        [Authorize(Roles = "Administrator")]
+        [ResponseType(typeof(Competition))]
+        public IHttpActionResult PostCompetition(Competition competition)
         {
-            return db.Competitions.Any(c => c.Sku == key);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Competitions.Add(competition);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (CompetitionExists(competition.Sku))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = competition.Sku }, competition);
+        }
+
+        // DELETE: api/Competitions/5
+        [Authorize(Roles = "Administrator")]
+        [ResponseType(typeof(Competition))]
+        public IHttpActionResult DeleteCompetition(string id)
+        {
+            Competition competition = db.Competitions.Find(id);
+            if (competition == null)
+            {
+                return NotFound();
+            }
+
+            db.Competitions.Remove(competition);
+            db.SaveChanges();
+
+            return Ok(competition);
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            if (disposing)
+            {
+                db.Dispose();
+            }
             base.Dispose(disposing);
+        }
+
+        private bool CompetitionExists(string id)
+        {
+            return db.Competitions.Count(e => e.Sku == id) > 0;
         }
     }
 }
