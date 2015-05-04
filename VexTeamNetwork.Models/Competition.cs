@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace VexTeamNetwork.Models
@@ -42,6 +43,12 @@ namespace VexTeamNetwork.Models
 
         [DataMember]
         public ICollection<Division> Divisions { get; set; }
+
+        [IgnoreDataMember]
+        public ICollection<Award> Awards { get; set; }
+
+        [IgnoreDataMember]
+        public ICollection<Award> QualifyingAwards { get; set; }
 
         public virtual string Time
         {

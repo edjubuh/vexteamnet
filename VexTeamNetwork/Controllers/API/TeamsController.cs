@@ -21,6 +21,7 @@ namespace VexTeamNetwork.Controllers.API
         [EnableQuery]
         public IQueryable<Team> GetTeams()
         {
+            
             return db.Teams;
         }
 

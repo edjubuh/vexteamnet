@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -8,23 +9,23 @@ using Microsoft.AspNet.Identity;
 
 namespace VexTeamNetwork.Models
 {
-    public class NetworkContext : DbContext
-    {
-        public NetworkContext() : base("NetworkConnection")
+    public class ApplicationContext : DbContext
+    {    
+        public ApplicationContext() : base("name=ApplicationContext")
         {
-            //Configuration.ProxyCreationEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Entity<Award>()
                 .HasMany(a => a.QualifyingCompetitions)
                 .WithMany(c => c.QualifyingAwards)
                 .Map(m =>
                 {
                     m.ToTable("QualifyingAwards");
-                    m.MapLeftKey("Award_Sku", "Award_Name", "Award_Team");
-                    m.MapRightKey("Competition_Sku");
+                    m.MapLeftKey("award_Sku", "award_Name", "award_Team");
+                    m.MapRightKey("comp_Sku");
                 });
             base.OnModelCreating(modelBuilder);
         }
@@ -67,7 +68,6 @@ namespace VexTeamNetwork.Models
         public DbSet<Division> Divisions { get; set; }
 
         public DbSet<Match> Matches { get; set; }
-
-        public DbSet<Award> Awards { get; set; }
+    
     }
 }

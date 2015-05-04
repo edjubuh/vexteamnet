@@ -108,20 +108,8 @@
       <HintPath>..\packages\Microsoft.Spatial.6.10.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.2.2.5\lib\net45\Mono.Security.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Npgsql, Version=2.2.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.2.2.5\lib\net45\Npgsql.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Npgsql.EntityFramework, Version=2.2.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.EntityFramework.2.2.5\lib\net45\Npgsql.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -250,47 +238,20 @@
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\ManageController.cs" />
     <Compile Include="Controllers\MVC\TeamsController.cs" />
+    <Compile Include="DbMigrations\201505031849353_Initial.cs" />
+    <Compile Include="DbMigrations\201505031849353_Initial.Designer.cs">
+      <DependentUpon>201505031849353_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NetworkContext.cs" />
     <Compile Include="Models\SearchResult.cs" />
-    <Compile Include="NetworkMigrations\201504252145366_initial_addTeams.cs" />
-    <Compile Include="NetworkMigrations\201504252145366_initial_addTeams.Designer.cs">
-      <DependentUpon>201504252145366_initial_addTeams.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\201504252227459_UpdateTeams.cs" />
-    <Compile Include="NetworkMigrations\201504252227459_UpdateTeams.Designer.cs">
-      <DependentUpon>201504252227459_UpdateTeams.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\201504252240530_UpdateTeams1.cs" />
-    <Compile Include="NetworkMigrations\201504252240530_UpdateTeams1.Designer.cs">
-      <DependentUpon>201504252240530_UpdateTeams1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\201504260302351_UpdateTeamNumberRestrictions.cs" />
-    <Compile Include="NetworkMigrations\201504260302351_UpdateTeamNumberRestrictions.Designer.cs">
-      <DependentUpon>201504260302351_UpdateTeamNumberRestrictions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\201504261626509_AddedEventsAndDivisions.cs" />
-    <Compile Include="NetworkMigrations\201504261626509_AddedEventsAndDivisions.Designer.cs">
-      <DependentUpon>201504261626509_AddedEventsAndDivisions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\201504261906557_AddedMatches.cs" />
-    <Compile Include="NetworkMigrations\201504261906557_AddedMatches.Designer.cs">
-      <DependentUpon>201504261906557_AddedMatches.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\201505012245015_UpdatedDivisionsToExtendResources.cs" />
-    <Compile Include="NetworkMigrations\201505012245015_UpdatedDivisionsToExtendResources.Designer.cs">
-      <DependentUpon>201505012245015_UpdatedDivisionsToExtendResources.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\201505030417204_UpdatedMatches.cs" />
-    <Compile Include="NetworkMigrations\201505030417204_UpdatedMatches.Designer.cs">
-      <DependentUpon>201505030417204_UpdatedMatches.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -339,7 +300,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -416,29 +379,8 @@
     <EmbeddedResource Include="AccountMigrations\201504252119510_AddFirstName1.resx">
       <DependentUpon>201504252119510_AddFirstName1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201504252145366_initial_addTeams.resx">
-      <DependentUpon>201504252145366_initial_addTeams.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201504252227459_UpdateTeams.resx">
-      <DependentUpon>201504252227459_UpdateTeams.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201504252240530_UpdateTeams1.resx">
-      <DependentUpon>201504252240530_UpdateTeams1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201504260302351_UpdateTeamNumberRestrictions.resx">
-      <DependentUpon>201504260302351_UpdateTeamNumberRestrictions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201504261626509_AddedEventsAndDivisions.resx">
-      <DependentUpon>201504261626509_AddedEventsAndDivisions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201504261906557_AddedMatches.resx">
-      <DependentUpon>201504261906557_AddedMatches.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201505012245015_UpdatedDivisionsToExtendResources.resx">
-      <DependentUpon>201505012245015_UpdatedDivisionsToExtendResources.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NetworkMigrations\201505030417204_UpdatedMatches.resx">
-      <DependentUpon>201505030417204_UpdatedMatches.cs</DependentUpon>
+    <EmbeddedResource Include="DbMigrations\201505031849353_Initial.resx">
+      <DependentUpon>201505031849353_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

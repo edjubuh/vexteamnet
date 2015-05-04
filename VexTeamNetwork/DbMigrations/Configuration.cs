@@ -1,19 +1,19 @@
-namespace VexTeamNetwork.NetworkMigrations
+namespace VexTeamNetwork.DbMigrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<VexTeamNetwork.Models.NetworkContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<VexTeamNetwork.Models.ApplicationContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"NetworkMigrations";
+            MigrationsDirectory = @"DbMigrations";
         }
 
-        protected override void Seed(VexTeamNetwork.Models.NetworkContext context)
+        protected override void Seed(VexTeamNetwork.Models.ApplicationContext context)
         {
             //  This method will be called after migrating to the latest version.
 
