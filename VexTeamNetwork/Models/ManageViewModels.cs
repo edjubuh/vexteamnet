@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace VexTeamNetwork.Models
 {
@@ -58,6 +62,7 @@ namespace VexTeamNetwork.Models
         public string ConfirmPassword { get; set; }
     }
 
+
     public class AddPhoneNumberViewModel
     {
         [Required]
@@ -81,6 +86,6 @@ namespace VexTeamNetwork.Models
     public class ConfigureTwoFactorViewModel
     {
         public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+        public ICollection<SelectListItem> Providers { get; set; }
     }
 }

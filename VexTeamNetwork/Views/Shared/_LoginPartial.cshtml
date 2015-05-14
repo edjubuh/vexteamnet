@@ -1,25 +1,20 @@
-﻿@using Microsoft.AspNet.Identity
-@using VexTeamNetwork.Models
-@using VexTeamNetwork
-@using Microsoft.AspNet.Identity.EntityFramework
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-    {
-        @Html.AntiForgeryToken()
+﻿@using System.Security.Claims
 
-        <ul>
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + (new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()))).FindById(User.Identity.GetUserId()).FirstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <a asp-controller="Manage" asp-action="Index" title="Manage">Hello @User.GetUserName()!</a>
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
-    }
+    </form>
 }
 else
 {
-    <ul>
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a id="registerLink" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a id="loginLink" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
 }
