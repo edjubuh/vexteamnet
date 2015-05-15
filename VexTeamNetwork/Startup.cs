@@ -62,6 +62,15 @@ namespace VexTeamNetwork
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.ConfigureIdentity(config =>
+            {
+                config.Password.RequireDigit = false;
+                config.Password.RequiredLength = 5;
+                config.Password.RequireNonLetterOrDigit = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireLowercase = false;
+            });
+
             // Configure the options for the authentication middleware.
             // You can add options for Google, Twitter and other middleware as shown below.
             // For more information see http://go.microsoft.com/fwlink/?LinkID=532715

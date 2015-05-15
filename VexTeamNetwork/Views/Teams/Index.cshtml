@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Team>
+@using VexTeamNetwork.Models
+@{
+    ViewBag.Title = "Teams";
+}
+<div class="table-responsive">
+    <table id="teams_table" data-order='[[0, "asc"]]' class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Number)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TeamName)
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section styles
+{
+    <link rel="stylesheet" href="~/lib/datatables/media/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" href="~/lib/datatables-bootstrap3/BS3/assets/css/datatables.css"/>
+}
+@section scripts
+{
+    <script src="~/lib/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables-bootstrap3/BS3/assets/js/datatables.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#teams_table').DataTable({
+                "pageLength": 25,
+                "info": false,
+                "stateSave": true
+            });
+        });
+    </script>
+}
