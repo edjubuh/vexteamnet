@@ -15,11 +15,11 @@ namespace VexTeamNetwork.Models
     {
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class IdentityContext : IdentityDbContext<ApplicationUser>
     {
         private static bool _created;
 
-        public ApplicationDbContext()
+        public IdentityContext()
         {
             // Create the database and schema if it doesn't exist
             if (!_created)

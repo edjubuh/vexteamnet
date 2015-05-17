@@ -1,6 +1,5 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-top: 5rem;
 }
 
 /* Wrapping element */
@@ -9,9 +8,7 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-
 /* Set widths on the form inputs since otherwise they're 100% wide */
-input,
 select,
 textarea {
     max-width: 280px;
@@ -32,3 +29,60 @@ textarea {
         z-index: 10 !important;
     }
 }
+
+.navigation {
+    position: fixed;
+    top: 0;
+    margin: 5px;
+    width: 100%;
+}
+
+    .navigation * {
+        display: inline-block;
+        position: relative;
+        top: 0;
+        vertical-align: middle;
+    }
+
+    .navigation > .vtn-banner {
+        display: inline-flex;
+        height: 2em;
+        line-height: 2em;
+        margin: 0 0.5em;
+    }
+
+        .navigation > .vtn-banner > img {
+            height: 2em;
+        }
+
+    .navigation > .page-title {
+        margin: 0.1em 0;
+    }
+
+    .navigation .search-form {
+        position: absolute;
+        width: 100%;
+        padding: 5px;
+        margin: 0;
+    }
+
+    .navigation .search-box {
+        width: 100%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        line-height: 1.5em;
+    }
+
+    @media(max-width: 400px){
+        .navigation > .page-title {
+            display: block;
+            padding-top: 10px;
+        }
+
+        .navigation .search-form {
+            margin-left: 50px;
+        }
+    }

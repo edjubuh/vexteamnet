@@ -144,7 +144,7 @@ namespace VexTeamNetwork.Migrations
         }
     }
 
-    [ContextType(typeof(ApplicationDbContext))]
+    [ContextType(typeof(IdentityContext))]
     partial class CreateIdentitySchema
     {
         public override string Id

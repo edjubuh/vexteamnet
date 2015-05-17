@@ -5,3 +5,7 @@ gulp.task("install", function () {
     return bower({ layout: "byComponent" })
         .pipe(gulp.dest('wwwroot/lib'));
 });
+
+gulp.task("clean", function () {
+    return bower({cmd: 'prune'});
+});

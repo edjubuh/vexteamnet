@@ -10,7 +10,7 @@ using VexTeamNetwork.Models;
 
 namespace VexTeamNetwork.Migrations
 {
-    [ContextType(typeof(ApplicationDbContext))]
+    [ContextType(typeof(IdentityContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         public override IModel Model

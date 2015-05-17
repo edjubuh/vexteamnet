@@ -2,7 +2,6 @@
   "webroot": "wwwroot",
   "userSecretsId": "aspnet5-VexTeamNetwork-8f435972-ee5f-451b-9ba1-4ee39c0976a7",
   "version": "1.0.0-*",
-
   "dependencies": {
     "EntityFramework.Commands": "7.0.0-beta4",
     "EntityFramework.SqlServer": "7.0.0-beta4",
@@ -26,26 +25,22 @@
     "Microsoft.Framework.Logging": "1.0.0-beta4",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta4",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta4",
-
     "Microsoft.AspNet.WebApi": "5.2.3",
     "VexTeamNetwork.Models": "1.0.0-*"
   },
-
   "commands": {
     "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5000",
     "gen": "Microsoft.Framework.CodeGeneration",
     "ef": "EntityFramework.Commands"
   },
-
   "frameworks": {
     "dnx451": {
       "frameworkAssemblies": {
         "System.ComponentModel.DataAnnotations": "4.0.0.0"
       }
     },
-    "dnxcore50": { }
+    "dnxcore50": {}
   },
-
   "exclude": [
     "wwwroot",
     "node_modules",
@@ -59,7 +54,12 @@
     "**.vspscc"
   ],
   "scripts": {
-    "postrestore": [ "npm install", "bower install" ],
-    "prepare": [ "gulp install" ]
+    "postrestore": [
+      "npm install",
+      "bower install"
+    ],
+    "prepare": [
+      "gulp install"
+    ]
   }
 }
