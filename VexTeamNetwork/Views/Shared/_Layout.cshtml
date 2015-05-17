@@ -4,18 +4,31 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewBag.Title - @AppSettings.Options.SiteTitle</title>
+        <title>
+        @if(!String.IsNullOrWhiteSpace(ViewBag.PageTitle))
+{
+    @ViewBag.PageTitle
+}
+else
+{
+    @String.Concat(ViewBag.Title, " - ", AppSettings.Options.SiteTitle)
+}
+</title>
 
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/furtive/css/furtive.css" />
             <link rel="stylesheet" href="~/lib/normalize.css/normalize.css" />
+            <link rel="stylesheet" href="~/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css"/>
             <link rel="stylesheet" href="~/css/site.css" />
         </environment>
         <environment names="Staging,Production">
             <link rel="stylesheet" href="~/lib/furtive/css/furtive.css" />
             <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/normalize.min.css"
                   asp-fallback-href="~/lib/normalize.css/normalize.css"
-                  asp-fallback-test-class="normalize" asp-fallback-test-property="display" asp-fallback-test-value="none" />
+                  asp-fallback-test-class="img" asp-fallback-test-property="border" asp-fallback-test-value="0" />
+            <link rel="stylesheet" href="//malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css"
+                  asp-fallback-href="~/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css"
+                  asp-fallback-test-class="mCustomScrollbar" asp-fallback-test-property="touch-action" asp-fallback-test-value="none" />
             <link rel="stylesheet" href="~/css/site.css" />
         </environment>
         @RenderSection("styles", required: false)
@@ -23,42 +36,18 @@
     <body>
         <nav class="navigation">
             <a class="vtn-banner" asp-controller="Home" asp-action="Index"><img src="~/images/vtn_banner.png" /></a>
-            <h1 class="page-title">
-                @ViewBag.Title
-            </h1>
+            <h1 class="page-title">@ViewBag.Title</h1>
+            <div class="menu">
+                @await Html.PartialAsync("_LoginPartial")
+                <ul>
+                    <li><a asp-controller="Teams" asp-action="Index">Teams</a></li>
+                </ul>
+            </div>
             <form class="search-form">
-                <input class="search-box" type="search" placeholder="Search" />
+                <input class="search-box" type="search" placeholder="click or tap here to search" />
             </form>
         </nav>
-        <!--<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-login">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                        <img src="~/images/vtn_banner.png"/>
-                    </a>
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search" />
-                        </div>
-                        <button type="submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </form>
-                </div>
-                <div class="navbar-collapse collapse" id="user-login">
-                    @await Html.PartialAsync("_LoginPartial")
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a controller="Teams" action="Index">Teams</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>-->
+
         <div class="container body-content">
             @RenderBody()
             <hr />
@@ -70,6 +59,7 @@
         <environment names="Development">
             <script src="~/lib/jquery/jquery.js"></script>
             <script src="~/lib/modernizr/modernizr.js"></script>
+            <script src="~/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
         </environment>
         <environment names="Staging,Production">
             <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.10.2.min.js"
@@ -80,7 +70,26 @@
                     asp-fallback-src="~/lib/foundadtion/js/vendor/modernizr.js"
                     asp-fallback-test="window.jQuery">
             </script>
+            <script src="//malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"
+                    asp-fallback-src="~/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"
+                    asp-fallback-test="window.jQuery"></script>
         </environment>
         @RenderSection("scripts", required: false)
+        <script>
+            (function($){
+                $(window).load(function(){
+                    $(".page-title").mCustomScrollbar({
+                        axis: "x",
+                        theme:"minimal-dark",
+                        autoExpandScrollbar: true,
+                        advanced:{autoExpandHorizontalScroll:true},
+                        scrollInertia: 5,
+                        mouseWheel: {
+                            deltaFactor: 10
+                        }
+                    });
+                });
+            })(jQuery);
+        </script>
     </body>
 </html>

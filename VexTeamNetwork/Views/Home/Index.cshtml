@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@inject IOptions<AppSettings> AppSettings
+@{
+    ViewBag.Title = AppSettings.Options.SiteTitle;
+    ViewBag.PageTitle = AppSettings.Options.SiteTitle;
 }
 
 <!--<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">

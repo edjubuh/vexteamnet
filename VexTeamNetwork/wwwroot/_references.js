@@ -332,3 +332,6 @@
 /// <reference path="lib/jquery/src/var/support.js" />
 /// <reference path="lib/jquery/src/var/toString.js" />
 /// <reference path="lib/furtive/gulpfile.js" />
+/// <reference path="lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js" />
+/// <reference path="lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js" />
+/// <reference path="lib/jquery-mousewheel/jquery.mousewheel.js" />

@@ -33,8 +33,9 @@ textarea {
 .navigation {
     position: fixed;
     top: 0;
-    margin: 5px;
+    padding: 5px;
     width: 100%;
+    background-color: white;
 }
 
     .navigation * {
@@ -55,14 +56,18 @@ textarea {
             height: 2em;
         }
 
-    .navigation > .page-title {
+    .navigation .page-title {
         margin: 0.1em 0;
+        max-width: 40%;
+        overflow: hidden;
     }
 
     .navigation .search-form {
-        position: absolute;
-        width: 100%;
+        display: inline-block;
+        width: 20em;
+        margin-right: -3px;
         padding: 5px;
+        padding-top: 10px;
         margin: 0;
     }
 
@@ -74,15 +79,39 @@ textarea {
         outline: none;
         border: none;
         line-height: 1.5em;
+        font-size: 1.25em;
+        color: black;
     }
 
-    @media(max-width: 400px){
-        .navigation > .page-title {
-            display: block;
-            padding-top: 10px;
-        }
+#mCSB_1_scrollbar_horizontal {
+    margin-top: -20px;
+}
 
-        .navigation .search-form {
-            margin-left: 50px;
-        }
+input::-webkit-input-placeholder {
+    color: lightgrey;
+}
+
+input:hover::-webkit-input-placeholder {
+    color: black;
+}
+
+.navigation .search-box:hover:not(:focus) {
+    color: lightgrey;
+}
+
+@media(max-width: 400px) {
+    .navigation > .page-title {
+        display: block;
+        padding-top: 10px;
+        max-width: 100%;
     }
+
+    .navigation .search-form {
+        margin-left: 50px;
+    }
+}
+
+.navigation .menu {
+    float: right;
+    vertical-align: middle;
+}
