@@ -56,8 +56,8 @@ namespace VexTeamNetwork
                 .AddSqlServer()
                 .AddDbContext<IdentityContext>(options =>
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+
             services.AddEntityFramework()
-                .AddSqlServer()
                 .AddDbContext<ApplicationContext>(options =>
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
