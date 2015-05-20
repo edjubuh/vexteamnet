@@ -10,8 +10,7 @@
     "modernizr": "2.8.3",
     "furtive": "2.2.0",
     "normalize.css": "3.0.3",
-    "malihu-custom-scrollbar-plugin": "3.0.8",
-    "responsive-nav": "1.0.39"
+    "malihu-custom-scrollbar-plugin": "3.0.8"
   },
   "resolutions": {
     "jquery": ">= 1.9.1"

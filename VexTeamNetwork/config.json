@@ -3,8 +3,11 @@
     "SiteTitle": "VEX Team Network"
   },
   "Data": {
-    "DefaultConnection": {
-      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-VexTeamNetwork-8f435972-ee5f-451b-9ba1-4ee39c0976a7;Trusted_Connection=True;MultipleActiveResultSets=true"
+    "IdentityConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-VexTeamNetwork-8f435972-ee5f-451b-9ba1-4ee39c0976a9;Trusted_Connection=True;MultipleActiveResultSets=true"
+    },
+    "ApplicationConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-VexTeamNetwork-8f435972-ee5f-451b-9ba1-4ee39c0976a8;Trusted_Connection=True;MultipleActiveResultSets=true"
     }
   }
 }

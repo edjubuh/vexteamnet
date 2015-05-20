@@ -55,11 +55,11 @@ namespace VexTeamNetwork
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<IdentityContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                    options.UseSqlServer(Configuration["Data:IdentityConnection:ConnectionString"]));
 
             services.AddEntityFramework()
                 .AddDbContext<ApplicationContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                    options.UseSqlServer(Configuration["Data:ApplicationConnection:ConnectionString"]));
 
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>()
