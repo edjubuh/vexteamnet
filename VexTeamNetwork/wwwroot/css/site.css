@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 5rem;
+    padding-top: 65px;
 }
 
 /* Wrapping element */
@@ -14,14 +14,113 @@ textarea {
     max-width: 280px;
 }
 
-.vtn-banner > img {
-    height: 30px;
+.navbar {
+    min-height: 60px;
 }
 
-h1.navbar-brand { 
+nav.container > * {
+    display: inline-flex;
+}
+
+.navbar-brand {
+    height: auto;
+}
+
+.vtn-banner {
+    padding: 15px;
+}
+
+    .vtn-banner > img {
+        height: 30px;
+    }
+
+p.navbar-brand {
+    font-size: 2rem;
     margin-bottom: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    padding-top: 0;
-    vertical-align: middle;
+    padding-top: 18.5px;
+    padding-bottom: 18.5px;
+}
+
+.page-title {
+    max-width: 450px;
+}
+
+@media(max-width: 992px) {
+    .page-title {
+        max-width: 175px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav > li > a {
+        padding-top: 18.5px;
+        padding-bottom: 18.5px;
+    }
+}
+
+.navbar-collapse form[role="search"] {
+    display: inline-block;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    padding: 0px;
+    margin: 3.5px 0px;
+    z-index: 200;
+}
+
+
+    .navbar-collapse form[role="search"] input {
+        border-radius: 0px;
+        border-width: 0px;
+        outline: none;
+        padding: 16px 12px;
+        font-size: 14pt;
+        font-style: italic;
+        color: rgb(160, 160, 160);
+        background-color: rgb(248, 248, 248);
+        box-shadow: none;
+    }
+
+    .navbar-collapse form[role="search"] button {
+        background: none;
+        border: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+        .navbar-collapse form[role="search"] button[type="reset"] {
+            display: none;
+        }
+
+@media (min-width: 768px) {
+    .navbar-collapse form[role="search"] {
+        width: 38px;
+    }
+
+        .navbar-collapse form[role="search"] button,
+        .navbar-collapse form[role="search"] input {
+            padding: 15px 12px;
+        }
+
+        .navbar-collapse form[role="search"] input {
+            font-size: 18pt;
+            opacity: 0;
+            display: none;
+            height: 50px;
+        }
+
+        .navbar-collapse form[role="search"].active {
+            width: auto;
+        }
+
+            .navbar-collapse form[role="search"].active button,
+            .navbar-collapse form[role="search"].active input {
+                display: table-cell;
+                opacity: 1;
+            }
+
+            .navbar-collapse form[role="search"].active input {
+                width: 100%;
+            }
 }

@@ -336,3 +336,4 @@
 /// <reference path="lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js" />
 /// <reference path="lib/jquery-mousewheel/jquery.mousewheel.js" />
 /// <reference path="bootstrap/js/bootstrap.js" />
+/// <reference path="js/site.js" />

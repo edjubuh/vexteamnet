@@ -137,7 +137,7 @@
     "@container-md": "@container-desktop",
     "@container-large-desktop": "(1140px + @grid-gutter-width)",
     "@container-lg": "@container-large-desktop",
-    "@navbar-height": "50px",
+    "@navbar-height": "60px",
     "@navbar-margin-bottom": "@line-height-computed",
     "@navbar-border-radius": "@border-radius-base",
     "@navbar-padding-horizontal": "floor((@grid-gutter-width / 2))",
@@ -407,7 +407,8 @@
     "modal.js",
     "tab.js",
     "affix.js",
+    "collapse.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=c9f9aad05d14c8e29d5d"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=e733edfb260230e11009"
 }
